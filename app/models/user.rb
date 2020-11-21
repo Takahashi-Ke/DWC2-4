@@ -35,4 +35,18 @@ class User < ApplicationRecord
     followed_users.include?(user)
   end
   
+  def self.search(search, keyword)
+    if search == "perfect_match"
+      @user = User.where(name: "#{keyword}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?", "#{keyword}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?", "%#{keyword}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?", "%#{keyword}%")
+    else
+      @user = User.all
+    end
+  end
+  
 end

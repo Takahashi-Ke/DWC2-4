@@ -1,0 +1,11 @@
+<% provide(:title, @title) %>
+<% provide(:keyword, @keyword) %>
+
+<h2><%= @title %> search for '<%= @keyword %>'</h2>
+<% if @range == '1' && @users.exists? %>
+  <%= render 'users/index', users: @users %>
+<% elsif @range == '2' && @books.exists? %>
+  <%= render 'books/index', books: @books %>
+<% else %>
+  <p>該当する検索結果はありません</p>
+<% end %>
