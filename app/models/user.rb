@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  include JpPrefecture
+  jp_prefecture :prefecture_code
 
   has_many :books
 	has_many :favorites, dependent: :destroy
@@ -11,7 +14,10 @@ class User < ApplicationRecord
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
-  
+  validates :postal_code, presence: true
+  validates :prefecture_code, presence: true
+  validates :city, presence: true
+  validates :building, presence: true
   
   # フォローする人を取得
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
@@ -47,6 +53,15 @@ class User < ApplicationRecord
     else
       @user = User.all
     end
+  end
+  
+  # postal_codeからprefecture_nameに変換するメソッド
+  def prefecture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+    
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
   
 end
