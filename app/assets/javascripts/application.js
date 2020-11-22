@@ -16,3 +16,8 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
+
+/* global $*/
+$(".favorite-btn").html("<%= j(render 'favorites/favorite-btn', book: @book) %>");
+
+$("book_comment").html("<%= jrender 'book_comments/book_comment', book: @book, book_comment: BookComment.new) %>");
