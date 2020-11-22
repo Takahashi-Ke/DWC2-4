@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def follower
     @title = "Follower User"
     @user = User.find(params[:id])
-    @users = @user.following_users.all
+    @users = @user.following_users
     render 'show_follow'
   end
 
