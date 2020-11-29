@@ -5,7 +5,7 @@ $(function() {
     address: {
       '#user_prefecture_code': '%3',
       '#user_city': '%4',
-      '#user_building': '%5%6%7',
+      '#user_building': '%5%6',
     },
   });
 });

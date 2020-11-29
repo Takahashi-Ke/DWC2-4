@@ -1,5 +1,10 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  after_action :notify_new_record, if: :devise_controller?, only: [:create]
+
+  def notify_new_record
+    NotificationMailer.complete_mail(@user).deliver
+  end
 
   private
 
